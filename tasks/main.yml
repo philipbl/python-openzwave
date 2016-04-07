@@ -28,3 +28,33 @@
     - "make PYTHON_EXEC={{ virtualenv_path }}/bin/python common-deps"
     - "make PYTHON_EXEC={{ virtualenv_path }}/bin/python pip-deps"
     - "make PYTHON_EXEC={{ virtualenv_path }}/bin/python install"
+
+# TODO: Add instructions on how to run and why and turn off home assistant
+
+- name: Download dependencies for control panel
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - libgnutls28
+    - libgnutlsxx28
+    - libgnutls-dev
+
+- name: Download libmicrohttpd
+  unarchive:
+    src: ftp://ftp.gnu.org/gnu/libmicrohttpd/libmicrohttpd-0.9.19.tar.gz
+    dest: "{{ working_directory }}/openzwave/"
+    copy: no
+
+- name: Clone open-zwave-control-panel repository
+  git:
+    repo: https://github.com/OpenZwave/open-zwave-control-panel/ open-zwave-control-panel
+    dest: "{{ working_directory }}/openzwave/"
+    update: no
+
+
+# Modify makefile
+
+# Build
+
+# Add to path
