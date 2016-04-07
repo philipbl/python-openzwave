@@ -1,0 +1,30 @@
+---
+- name: Ensure apt cache is up to date
+  apt:
+    update_cache: yes
+
+- name: Cloning python-openzwave
+  git:
+    repo: https://github.com/OpenZWave/python-openzwave.git
+    dest: "{{ working_directory }}"
+    update: no
+
+- name: Install dependency
+  pip:
+    name: Cython
+    virtualenv: "{{ virtualenv_path }}"
+
+- name: Check if python-openzwave is already installed
+  command: "{{ virtualenv_path }}/bin/pip list"
+  register: packages
+  changed_when: False
+
+- name: Build python-openzwave
+  shell: "{{ item }}"
+  args:
+    chdir: "{{ working_directory }}"
+  when: "'openzwave' not in packages.stdout"
+  with_items:
+    - "make PYTHON_EXEC={{ virtualenv_path }}/bin/python common-deps"
+    - "make PYTHON_EXEC={{ virtualenv_path }}/bin/python pip-deps"
+    - "make PYTHON_EXEC={{ virtualenv_path }}/bin/python install"
