@@ -3,6 +3,15 @@
   apt:
     update_cache: yes
 
+- name: Download tools
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - build-essential
+    - make
+    - git
+
 - name: Cloning python-openzwave
   git:
     repo: https://github.com/OpenZWave/python-openzwave.git
