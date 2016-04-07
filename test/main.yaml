@@ -1,0 +1,16 @@
+---
+- name: Bring up docker containers
+  hosts: localhost
+  gather_facts: false
+  vars:
+    inventory:
+      - name: host_1
+        image: "chrismeyers/ubuntu12.04"
+  roles:
+    - role: provision_docker
+      provision_docker_inventory: "{{ inventory }}"
+
+- name: Test role
+  hosts: docker_containers
+  roles:
+    - role: python-openzwave
