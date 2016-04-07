@@ -29,6 +29,7 @@
     - "make PYTHON_EXEC={{ virtualenv_path }}/bin/python pip-deps"
     - "make PYTHON_EXEC={{ virtualenv_path }}/bin/python install"
 
+
 # TODO: Add instructions on how to run and why and turn off home assistant
 
 - name: Download dependencies for control panel
