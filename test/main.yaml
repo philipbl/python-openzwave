@@ -10,7 +10,25 @@
     - role: provision_docker
       provision_docker_inventory: "{{ inventory }}"
 
+  tasks:
+    - name: Install python3
+      apt:
+        name: '{{ item }}'
+        state: present
+      with_items:
+        - python3
+        - python-pip3
+
+    - name: Where is python?
+      shell: "which -a python"
+      register: where
+
+    - debug:
+        msg: '{{ where }}'
+
 - name: Test role
   hosts: docker_containers
   roles:
     - role: python-openzwave
+      virtualenv_path: ''
+      working_directory: '$HOME'
