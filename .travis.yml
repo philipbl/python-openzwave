@@ -7,7 +7,6 @@ env:
 
 script:
   - "bash -ex .travis-ci.sh"
-  - "cat /etc/os-release"
 # script:
 #   - cd test
 #   - sudo ansible-playbook -i inventory -e "provision_docker_privileged=true" main.yaml --syntax-check
